@@ -161,7 +161,7 @@ int addNewClass(struct st_class* c[], int csize){
 }
 
 void editClass(struct st_class* c[], int csize){
-	struct st_class* p;
+	struct st_class* p = NULL;		// 난수 차단
 	int code;
 	printf(">> Enter a code of class > ");
 	scanf("%d", &code);
@@ -169,6 +169,19 @@ void editClass(struct st_class* c[], int csize){
 	
 	// You must complete this section.
 
+	// 탐색
+	for(int i = 0; i < csize; i++){
+		if(code == c[i]->code){
+			p = c[i];
+			break;
+		}
+	}
+
+	// 공백이면 return
+	if(p == NULL){
+		printf("No such class.\n");
+		return;
+	}
 
 	
 	printf("> Current: [%d] %s [credits %d - %s]\n",p->code, p->name, p->unit, kname[p->grading-1]);
