@@ -199,12 +199,61 @@ void editClass(struct st_class* c[], int csize){
 
 // You must make all these functions.
 
-int applyMyClasses(int my[], int msize, struct st_class* c[], int csize){
+int applyMyClasses(int my[], int msize, struct st_class* c[], int csize){	// my[] -> 내가 신청한 과목 목록
+	int code = 0;
+	int more = 0;
 
+	while(msize != 10){
+		struct st_class* p = NULL;		// 난수 차단
 
+		printf("Enter a class code > ");
+		scanf("%d", &code);
 
-	
-	return 0;
+		for(int i = 0; i < csize; i++){
+			if(code == c[i]->code){
+				p = c[i];
+				break;
+			}
+		}
+
+		// 과목 코드가 존재하지 않을 경우
+		if(p == NULL){
+			printf("No such code of class.\n");
+			continue;
+		}
+
+		// 과목 코드가 중복될 경우
+		int is_overlapped = 0;
+		for(int j = 0; j < msize; j++){
+			
+			if(code == my[j]){
+				printf("Overlapped class.\n");
+				is_overlapped = 1;
+				break;
+			}
+		}
+
+		// 중복되면 다시 위로
+		if(is_overlapped == 1){
+			continue;
+		}
+
+		printf("[%d] %s [credit %d - %s]\n",p->code,p->name,p->unit,kname[p->grading-1]);
+		my[msize] = code;
+		msize++;
+
+		// 반복 분기점
+		printf("Add more?(1:Yes 2:No) > ");
+		scanf("%d", &more);
+
+		if(more == 1){
+			continue;
+		}else if (more == 2){
+			break;
+		}
+
+	}
+	return msize;
 }
 
 void printMyClasses(int my[], int msize, struct st_class* c[], int csize){
