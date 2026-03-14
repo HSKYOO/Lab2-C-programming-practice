@@ -273,8 +273,29 @@ void printMyClasses(int my[], int msize, struct st_class* c[], int csize){
 }
 
 void saveMyClass(int my[], int msize, struct st_class* c[], int csize){
+	FILE* file = fopen("my_classes.txt","w");
+	int classNum = 0;
+	int total_credit = 0;
+	int credit_1 = 0;	// A+~F grading
+	int credit_2 = 0;	// P/F grading
 
+	fprintf(file, "My Classes\n");
 
-
-	
+	for(int i = 0; i < msize; i++){
+		for(int j = 0; j < csize; j++){
+			if(my[i] == c[j]->code){
+				fprintf(file, "%d. [%d] %s [credit %d - %s]\n", i+1, c[j]->code, c[j]->name, c[j]->unit, kname[c[j]->grading-1]);
+				classNum++;
+				total_credit += c[j]->unit;
+				if(c[j]->grading == 1){
+					credit_1 += c[j]->unit;
+				}else if(c[j]->grading == 2){
+					credit_2 += c[j]->unit;
+				}
+				break;
+			}
+		}
+	}
+	fprintf(file,"All : %d classes, %d credits (A+~F %d credits, P/F %d credits)\n",classNum, total_credit, credit_1, credit_2);
+	fclose(file);
 }
