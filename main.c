@@ -257,9 +257,18 @@ int applyMyClasses(int my[], int msize, struct st_class* c[], int csize){	// my[
 }
 
 void printMyClasses(int my[], int msize, struct st_class* c[], int csize){
+	int total_credit = 0;
 
-
-	
+	for(int i = 0; i < msize; i++){
+		for(int j = 0; j < csize; j++){
+			if(my[i] == c[j]->code){
+				printf("%d. [%d] %s [credit %d - %s]\n", i+1, c[j]->code, c[j]->name, c[j]->unit, kname[c[j]->grading-1]);
+				total_credit += c[j]->unit;
+				break;
+			}
+		}
+	}
+	printf("All : %d credits\n",total_credit);
 
 }
 
